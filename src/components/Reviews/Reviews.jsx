@@ -12,7 +12,7 @@ const Reviews = () => {
   if (!review) {
     return null;
   }
-  // const { results, author, content } = review;
+
   return (
     <Box as="section">
       <Box as="ul" display="flex" flexDirection="column" gridGap={15} p={0}>

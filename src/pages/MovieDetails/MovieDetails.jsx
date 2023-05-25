@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useState, useEffect, Suspense } from 'react';
 import { Box } from 'components/Box';
 import { fetchMoviesDetails } from 'Services/Api';
-import { ColorRing } from 'react-loader-spinner';
+import { Triangle } from 'react-loader-spinner';
 const MoviesDetails = () => {
   const { movieId } = useParams();
 
@@ -73,14 +73,14 @@ const MoviesDetails = () => {
       <Suspense
         fallback={
           <div>
-            <ColorRing
-              visible={true}
+            <Triangle
               height="80"
               width="80"
-              ariaLabel="blocks-loading"
+              color="orange"
+              ariaLabel="triangle-loading"
               wrapperStyle={{}}
-              wrapperClass="blocks-wrapper"
-              colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+              wrapperClassName=""
+              visible={true}
             />
           </div>
         }
@@ -102,6 +102,6 @@ const NavItem = styled(NavLink)`
   }
 
   :hover:not(.active) {
-    color: deeppink;
+    color: orange;
   }
 `;
