@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 export const TrendList = styled.ul`
   display: flex;
   flex-wrap: wrap;
@@ -15,13 +15,13 @@ export const TrendCard = styled.li`
     transform: scale(1.06);
   }
 `;
-export const TitleLink = styled(NavLink)`
-  /* font-size: 18px;
+export const TitleLink = styled(Link)`
+  font-size: 18px;
   font-weight: 500;
   color: black;
   padding-left: 5px;
   padding-right: 5px;
-  margin-top: 10px; */
+  margin-top: 10px;
 `;
 
 export const BtnBack = styled.button`

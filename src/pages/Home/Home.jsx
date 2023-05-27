@@ -1,5 +1,5 @@
 import { Box } from 'components/Box';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchMoviesTrends } from 'Services/Api';
 
@@ -13,6 +13,7 @@ import {
 
 const Home = () => {
   const [trends, setTrends] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     fetchMoviesTrends().then(trending => {
@@ -33,7 +34,7 @@ const Home = () => {
       <TrendList>
         {trends.map(({ title, id, poster_path, release_date }, index) => (
           <TrendCard key={index}>
-            <TitleLink to={`movies/${id}`} id={id}>
+            <TitleLink to={`movies/${id}`} state={{ from: location }}>
               <img
                 src={`https://image.tmdb.org/t/p/w500${poster_path}`}
                 width={270}

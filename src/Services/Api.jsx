@@ -9,12 +9,13 @@ async function fetchMoviesTrends() {
   return trending.data;
 }
 
-async function fetchMoviesBySearch(searchQuery) {
-  const movie = await axios.get(
-    `search/movie?api_key=${KEY}&language=en-US&page=1&include_adult=false&query=${searchQuery}`
-  );
-  return movie.data;
-}
+// async function fetchMoviesBySearch(searchQuery) {
+//   const movie = await axios.get(
+//     `search/movie?api_key=${KEY}&language=en-US&page=1&include_adult=false&query=${searchQuery.query}`
+//   );
+//   console.log(movie);
+//   return movie.data;
+// }
 
 async function fetchMoviesDetails(movieId) {
   const movie = await axios.get(
@@ -39,7 +40,7 @@ async function fetchMoviesReviews(movieId) {
 
 export {
   fetchMoviesTrends,
-  fetchMoviesBySearch,
+  // fetchMoviesBySearch,
   fetchMoviesDetails,
   fetchMoviesCast,
   fetchMoviesReviews,
@@ -48,4 +49,4 @@ export {
 fetchMoviesReviews.propTypes = { movieId: PropTypes.number.isRequired };
 fetchMoviesCast.propTypes = { movieId: PropTypes.number.isRequired };
 fetchMoviesDetails.propTypes = { movieId: PropTypes.number.isRequired };
-fetchMoviesBySearch.propTypes = { movieId: PropTypes.string.isRequired };
+// fetchMoviesBySearch.propTypes = { movieId: PropTypes.string.isRequired };

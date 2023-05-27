@@ -10,7 +10,10 @@ const MoviesDetails = () => {
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
   const location = useLocation();
-  const backLinLocationRef = useRef(location.state?.from ?? '/movies');
+  const backLinkRef = useRef(location.state?.from ?? '/movies');
+
+  console.log(backLinkRef);
+  console.log(location);
 
   useEffect(() => {
     fetchMoviesDetails(movieId).then(setMovie);
@@ -24,7 +27,7 @@ const MoviesDetails = () => {
 
   return (
     <Box as="main">
-      <TitleLink to={backLinLocationRef.current}>
+      <TitleLink to={backLinkRef.current}>
         <BtnBack type="button">Go back</BtnBack>
       </TitleLink>
       <Box

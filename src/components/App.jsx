@@ -10,7 +10,7 @@ const Reviews = lazy(() => import('./Reviews/Reviews'));
 const MovieDetails = lazy(() => import('pages/MovieDetails/MovieDetails'));
 const PageNotFound = lazy(() => import('pages/PageNotFound/PageNotFound'));
 
-export const App = () => {
+const App = () => {
   return (
     <Box as="div" pl={15} pr={15}>
       <Routes>
@@ -28,3 +28,5 @@ export const App = () => {
     </Box>
   );
 };
+
+export default App;

@@ -1,61 +1,68 @@
-import { useState } from 'react';
-import { fetchMoviesBySearch } from 'Services/Api';
+import { useEffect, useState } from 'react';
+// import { fetchMoviesBySearch } from 'Services/Api';
 import { Box } from 'components/Box';
-import { IconMovieSearch } from './MoviesSearchIcon';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import {
-  SearchForm,
-  SearchFormBtn,
-  SearchFormInput,
-  MovieCard,
-  MovieList,
-  TitleLink,
   MovieDesc,
   Title,
+  TitleLink,
+  MovieCard,
+  MovieList,
 } from './Movies.styled';
-
+import SearchFilms from 'components/SearchForm/SearchForm';
 const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchMovie, setSearchMovie] = useState([]);
-
-  const handleQueryChange = e => {
-    setSearchQuery(e.target.value.toLowerCase());
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (searchQuery.trim() === '') {
-      alert('Enter a name of the movie');
+  const [searchParams, setSearchParams] = useSearchParams('');
+  const location = useLocation();
+  const [page] = useState(1);
+  const urlValue = searchParams.get('query') ?? '';
+  useEffect(() => {
+    if (urlValue === '') {
       return;
     }
-
-    setSearchQuery('');
-    setSearchMovie([]);
-    fetchMoviesBySearch(searchQuery).then(movie => {
-      const newData = movie.results;
-      setSearchMovie(searchMovie => {
-        return [...searchMovie, ...newData];
-      });
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2OWExMGZiNzYyMDgzZTBiYTg4M2ZjNmU4NjBmNzUxMiIsInN1YiI6IjY0NjU1MDE0MDA2YjAxMDE2ODRhMjBlNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BDHjxE3xlwjt1Vmj0BYBvFDhjMr4ND7lLemmi809zrU',
+      },
+    };
+    const KEY = '69a10fb762083e0ba883fc6e860f7512';
+    const searchParams = new URLSearchParams({
+      page,
+      query: searchQuery !== '' ? searchQuery : urlValue,
+      perPage: 12,
     });
+    const URL = `https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=1&api_key=${KEY}&${searchParams}`;
+    fetch(URL, options)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(films => {
+        setSearchMovie(films.results);
+        //       setLoading(false);
+      })
+      .catch(err => console.error(err));
+  }, [searchQuery, page, urlValue]);
+
+  const handleSubmit = value => {
+    const nextParams = searchQuery !== '' ? { guery: searchQuery } : {};
+    setSearchParams(nextParams);
+    setSearchQuery(value);
+    setSearchMovie([]);
   };
 
   return (
     <Box as="main">
-      <SearchForm onSubmit={handleSubmit}>
-        <SearchFormInput
-          type="text"
-          autocomplete="off"
-          placeholder="Search movies"
-          onChange={handleQueryChange}
-        />
-        <SearchFormBtn type="submit">
-          <IconMovieSearch />
-        </SearchFormBtn>
-      </SearchForm>
-
+      <SearchFilms onSubmit={handleSubmit} />
       <MovieList>
         {searchMovie.map(({ title, id, poster_path, release_date }, index) => (
           <MovieCard key={index}>
-            <TitleLink to={`${id}`} id={id}>
+            <TitleLink to={`${id}`} state={{ from: location }}>
               <img
                 src={`https://image.tmdb.org/t/p/w500${poster_path}`}
                 width={270}
