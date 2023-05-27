@@ -1,13 +1,16 @@
-import { NavLink, Outlet, useParams } from 'react-router-dom';
+import { NavLink, Outlet, useParams, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState, useEffect, Suspense } from 'react';
 import { Box } from 'components/Box';
 import { fetchMoviesDetails } from 'Services/Api';
 import { Triangle } from 'react-loader-spinner';
+import { useRef } from 'react';
+import { TitleLink, BtnBack } from 'pages/Home/Home.styled';
 const MoviesDetails = () => {
-  const { movieId } = useParams();
-
   const [movie, setMovie] = useState(null);
+  const { movieId } = useParams();
+  const location = useLocation();
+  const backLinLocationRef = useRef(location.state?.from ?? '/movies');
 
   useEffect(() => {
     fetchMoviesDetails(movieId).then(setMovie);
@@ -21,6 +24,9 @@ const MoviesDetails = () => {
 
   return (
     <Box as="main">
+      <TitleLink to={backLinLocationRef.current}>
+        <BtnBack type="button">Go back</BtnBack>
+      </TitleLink>
       <Box
         as="section"
         pt={15}

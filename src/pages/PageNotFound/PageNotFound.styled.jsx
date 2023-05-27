@@ -34,11 +34,10 @@ export const BackToHomeBtn = styled.button`
   gap: 10px;
   padding: 10px;
   font-size: 18px;
-  background-color: #8db48e;
+  background-color: orange;
   border: none;
   border-radius: 5px;
   &:hover {
-    background-color: #4d724d;
     scale: 1.02;
     cursor: pointer;
   }

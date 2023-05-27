@@ -23,6 +23,24 @@ export const TitleLink = styled(NavLink)`
   padding-right: 5px;
   margin-top: 10px; */
 `;
+
+export const BtnBack = styled.button`
+  background-color: orange;
+  color: black;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin-top: 10px;
+  font-weight: 500;
+  line-height: 1.33;
+  font-size: 14px;
+  &:hover {
+    transform: scale(1.06);
+  }
+`;
+
 export const TrendDesc = styled.p`
   padding-left: 5px;
   padding-right: 5px;
